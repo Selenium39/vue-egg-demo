@@ -15,6 +15,8 @@
 </template>
 <script>
 import { List, Cell } from "vant";
+import axios from "axios";
+import moment from "moment";
 export default {
   components: {
     [List.name]: List,
@@ -37,35 +39,26 @@ export default {
       });
     },
     onLoad() {
-      setTimeout(() => {
-        this.loading = false;
-        this.finished = true;
-        this.list = [
-          {
-            id: 1,
-            img: "https://avatars2.githubusercontent.com/u/29670394?s=60&v=4",
-            title: "文章标题",
-            content: "文章内容",
-            createTime: "2020/4/9 23:03"
-          },
-          {
-            id: 2,
-            img: "https://avatars2.githubusercontent.com/u/29670394?s=60&v=4",
-            title: "文章标题",
-            content: "文章内容",
-            createTime: "2020/4/9 23:03"
-          },
-          {
-            id: 3,
-            img: "https://avatars2.githubusercontent.com/u/29670394?s=60&v=4",
-            title: "文章标题",
-            content: "文章内容",
-            createTime: "2020/4/9 23:03"
-          }
-        ];
-      }, 1000);
+      axios.get("http://localhost:7001/article").then(res => {
+        if (res.status == 200) {
+          this.loading = false;
+          this.finished = true;
+          //对每个文章的时间进行格式化
+          this.list = res.data.msg.map(item => {
+            item.createTime = moment(item.createTime).format(
+              "YYYY-MM-DD HH:mm:ss"
+            );
+            return item;
+          });
+        }
+      });
     }
-  }
+  },
+  watch: {
+    list(){
+      this.onLoad();
+    }
+  },
 };
 </script>
 <style scoped>
