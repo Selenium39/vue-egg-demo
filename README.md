@@ -1,5 +1,5 @@
 # vue-egg-demo
-
+<img src="https://github.com/wantao666/vue-egg-demo/blob/master/2980k-bos1c.gif"/>
 ### 一、运行
 1. egg-server/config.default.js中修改mysql数据库密码为你自己数据库密码。<br/>,如果你的数据库是mysql8.0版本，还要做额外操作:https://yq.aliyun.com/articles/705235
 2. mysql -u root -p ${你的数据库密码} <br/>
